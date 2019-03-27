@@ -1,0 +1,137 @@
+page {
+    background: #f2f2f2;
+}
+
+view {
+}
+
+.container {
+    padding: 0;
+    margin: 0;
+    min-height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.weui-input {
+    color: #000;
+    width: 70%;
+    height: 18px;
+    font-size: 13px;
+    padding-left: 5px;
+}
+
+.weui-label {
+    float: left;
+    width: 30%;
+    margin-right: 10px;
+    padding-left: 10px;
+}
+
+.cells_form {
+    width: 100%;
+    margin-top: 40rpx;
+    margin-bottom: 40rpx;
+}
+
+.weui-cells__title {
+    color: #000;
+    font-weight: 900;
+    font-size: 50px;
+}
+
+.weui-cell {
+    background: #ffffff;
+    position: static;
+    border-bottom: 1px solid #d8d8d8;
+    font-size: 30rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: 80rpx;
+}
+
+
+
+.section {
+    width: 80%;
+    line-height: 20px;
+    font-size: 20rpx;
+    color: #666;
+}
+
+.logo {
+    height: 160rpx;
+    width: 160rpx;
+    margin: 30rpx auto;
+    display: block;
+}
+
+.logoview {
+    border: 2px solid #d8d8d8;
+    margin-top: 40rpx;
+    width: 220rpx;
+    height: 220rpx;
+    border-radius: 110rpx;
+    display: flex;
+    flex-direction: row;
+}
+
+.img {
+    height: 100rpx;
+    margin: 50rpx auto;
+    line-height: 100rpx;
+    text-align: center;
+    font-weight: 900;
+    font-size: 80rpx;
+}
+
+.btnbox {
+    float:left;
+    margin-left: 30rpx;
+    margin-top: 30rpx;
+    margin-bottom: 50rpx;
+    height: 78rpx;
+    border-radius: 15rpx;
+    position: relative;
+    overflow: hidden;
+    background: #29abe2;
+    color: #fff;
+    font-size: 36rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.body-view {
+    float: left;
+
+}
+
+.btnbox .btn {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border: 0;
+    opacity: 0;
+    background: transparent;
+    z-index: 9;
+}
+
+.btnbox .text {
+    display: block;
+    line-height: 1;
+    text-align: center;
+}
+
+.btnbox_hover {
+    background: #84cdec;
+}
+

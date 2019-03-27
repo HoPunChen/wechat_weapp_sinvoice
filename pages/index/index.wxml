@@ -1,0 +1,38 @@
+<view class="container">
+    <view class="logoview">
+        <image class="logo" mode="scaleToFill" src="{{iswaveready?imagepathconfig:imagepathdefault}}"></image>
+    </view>
+    <view class="cells_form">
+        <view class="weui-cell" style="border-top: 1px solid #d8d8d8;">
+            <label class="weui-label">WIFI账号</label>
+            <input bindinput="ssid" class="weui-input" placeholder="请输WiFi账号" type="text" value="{{ssid}}"></input>
+        </view>
+        <view class="weui-cell">
+            <label class="weui-label">WIFI密码</label>
+            <input bindinput="passwd" class="weui-input" placeholder="请输WiFi密码"  type="{{show}}" value="{{passwd}}" style="margin-left: 30rpx;">
+            </input>
+            <view class="body-view" >
+                <switch bindchange="switch2Change" type="checkbox"></switch>
+            </view>  
+        </view>
+        </view>
+    <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+        <view class="picker">
+            声波类型: {{array[index]}}
+        </view>
+    </picker>
+
+    <view style="width:80%">
+       <view class="btnbox" hoverClass="btnbox_hover" style="width:40%">
+          <button class="btn" type="primary"></button>
+             <view class="text">生成二维码</view>
+       </view>
+       <view class="btnbox" hoverClass="btnbox_hover" style="width:40%">
+           <button bindtap="config" class="btn" loading="{{iswaveready}}" type="primary"></button>
+              <view class="text">{{iswaveready?'停止配网':'开始配网'}}</view>
+              <view>
+                <audio loop="true" id="myAudio" src="{{audioSrc}}"></audio>
+              </view>
+       </view>
+    </view>
+</view>

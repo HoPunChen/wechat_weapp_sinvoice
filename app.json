@@ -1,0 +1,11 @@
+{
+    "pages": [
+        "pages/index/index"
+    ],
+    "window": {
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#414141",
+        "navigationBarTitleText": "声波配网",
+        "navigationBarTextStyle": "white"
+    }
+}
