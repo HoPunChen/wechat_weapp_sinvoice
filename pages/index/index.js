@@ -19,8 +19,11 @@ Page({
         imagepathconfig: "../image/cfglogo.gif",
         judgeState: !1,
         random: null,
-        modalHidden: true,
-        qrcode: ''
+        qrcodeModalHidden: true,
+        stringModalHidden: true,
+        contents: '这是可以复制的文字,粘贴后即可看到效果',
+        qrcode: '',
+        qrcodeString: ''
     },
     onLoad: function() {
         var t = this;
@@ -38,6 +41,7 @@ Page({
     },
     getWifiInfo: function() {
         var t = this;
+        if (t.data.ssid==''){
         wx.getConnectedWifi({
             success: function(a) {
                 console.log(a), t.setData({
@@ -49,6 +53,7 @@ Page({
             },
             complete: function() {}
         });
+        }
     },
     ssid: function(t) {
         this.setData({
@@ -65,12 +70,12 @@ Page({
           this.setData({
             isShow: false,
             show: "password"
-          })
+          }),this.onLoad()
         } else {
           this.setData({
             isShow: true,
             show: "text"
-          })
+          }),this.onLoad()
         }
     },
     bindPickerChange: function (e) {
@@ -82,7 +87,7 @@ Page({
     createQRcode:function(){
       if ("" !== this.data.passwd){
         this.setData({
-          modalHidden: false
+          qrcodeModalHidden: false
         })
         let qrcodeSize = this.getQRCodeSize()
         this.createQRCode(this.data.ssid+"&"+this.data.passwd, qrcodeSize)
@@ -99,7 +104,7 @@ Page({
        var size = 0; try {
        var res = wx.getSystemInfoSync();
        var scale = 750 / 278; //不同屏幕下QRcode的适配比例；设计稿是750宽
-       var width = res.windowWidth / scale;
+       var width = res.windowWidth / scale; 
        size = width;
      } catch (e) {
       // Do something when catch error
@@ -117,20 +122,50 @@ Page({
        size: parseInt(size)
        })
        that.setData({
-       'qrcode': _img
+         'qrcode': _img
        })
     },
-    modalConfirm: function () {
+    qrcodeModalConfirm: function () {
     // do something
        this.setData({
-         modalHidden: true
+         qrcodeModalHidden: true
     })
     },
-    modalCandel: function () {
+    qrcodeModalCandel: function () {
     // do something
        this.setData({
-         modalHidden: true
+         qrcodeModalHidden: true
     })
+    },
+    scanCode: function(){
+      wx.scanCode({
+        success: (res) => {
+          console.log(res)
+          this.setData({
+            stringModalHidden: false,
+            qrcodeString: res.result
+          })
+        },
+        fail: (res) =>{
+          console.log('二维码扫描失败')
+          this.setData({
+            stringModalHidden: true
+          })
+        }
+      })
+    },
+    stringModalConfirm: function () {
+    // do something
+         this.setData({
+           stringModalHidden: true
+    })
+    },
+    stringModalCandel: function (e) {
+       console.log(e)
+    // do something
+         this.setData({
+           stringModalHidden: true
+    }) 
     },
     config: function() {
         var t = this;
@@ -156,7 +191,7 @@ Page({
                      deviceId: a.data.random,
                      ssid: a.data.ssid,
                      password: a.data.passwd,
-                     clientId: 'test',
+                     clientId: '60e603be5dd338957e19610973776718',
                      modle: a.data.modle[a.data.index]
                    }, 
                    success: function (e) {
