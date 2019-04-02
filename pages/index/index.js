@@ -191,7 +191,7 @@ Page({
                      deviceId: a.data.random,
                      ssid: a.data.ssid,
                      password: a.data.passwd,
-                     clientId: '60e603be5dd338957e19610973776718',
+                     clientId: 'test',
                      modle: a.data.modle[a.data.index]
                    }, 
                    success: function (e) {
