@@ -1,3 +1,4 @@
+import QR from "../../utils/wxqrcode.js" // 二维码生成器
 require("base64.js"), getApp();
 
 Page({
@@ -18,7 +19,11 @@ Page({
         imagepathconfig: "../image/cfglogo.gif",
         judgeState: !1,
         random: null,
-        getRandomResult: !1
+        qrcodeModalHidden: true,
+        stringModalHidden: true,
+        contents: '这是可以复制的文字,粘贴后即可看到效果',
+        qrcode: '',
+        qrcodeString: ''
     },
     onLoad: function() {
         var t = this;
@@ -36,6 +41,7 @@ Page({
     },
     getWifiInfo: function() {
         var t = this;
+        if (t.data.ssid==''){
         wx.getConnectedWifi({
             success: function(a) {
                 console.log(a), t.setData({
@@ -47,6 +53,7 @@ Page({
             },
             complete: function() {}
         });
+        }
     },
     ssid: function(t) {
         this.setData({
@@ -63,12 +70,12 @@ Page({
           this.setData({
             isShow: false,
             show: "password"
-          })
+          }),this.onLoad()
         } else {
           this.setData({
             isShow: true,
             show: "text"
-          })
+          }),this.onLoad()
         }
     },
     bindPickerChange: function (e) {
@@ -76,6 +83,89 @@ Page({
           this.setData({
             index: e.detail.value
           })
+    },
+    createQRcode:function(){
+      if ("" !== this.data.passwd){
+        this.setData({
+          qrcodeModalHidden: false
+        })
+        let qrcodeSize = this.getQRCodeSize()
+        this.createQRCode(this.data.ssid+"&"+this.data.passwd, qrcodeSize)
+      } else wx.showModal({
+        title: "提示",
+        content: "wifi密码不能为空",
+        success: function (t) {
+          t.confirm ? console.log("用户点击确定") : t.cancel && console.log("用户点击取消");
+        }
+      });
+    },
+    //适配不同屏幕大小的canvas
+    getQRCodeSize: function () {
+       var size = 0; try {
+       var res = wx.getSystemInfoSync();
+       var scale = 750 / 278; //不同屏幕下QRcode的适配比例；设计稿是750宽
+       var width = res.windowWidth / scale; 
+       size = width;
+     } catch (e) {
+      // Do something when catch error
+      // console.log("获取设备信息失败"+e);
+     }
+     return size;
+    },
+    createQRCode: function (text, size) {
+      //调用插件中的draw方法，绘制二维码图片
+
+       let that = this
+
+       console.log('QRcode: ', text, size)
+       let _img = QR.createQrCodeImg(text, {
+       size: parseInt(size)
+       })
+       that.setData({
+         'qrcode': _img
+       })
+    },
+    qrcodeModalConfirm: function () {
+    // do something
+       this.setData({
+         qrcodeModalHidden: true
+    })
+    },
+    qrcodeModalCandel: function () {
+    // do something
+       this.setData({
+         qrcodeModalHidden: true
+    })
+    },
+    scanCode: function(){
+      wx.scanCode({
+        success: (res) => {
+          console.log(res)
+          this.setData({
+            stringModalHidden: false,
+            qrcodeString: res.result
+          })
+        },
+        fail: (res) =>{
+          console.log('二维码扫描失败')
+          this.setData({
+            stringModalHidden: true
+          })
+        }
+      })
+    },
+    stringModalConfirm: function () {
+    // do something
+         this.setData({
+           stringModalHidden: true
+    })
+    },
+    stringModalCandel: function (e) {
+       console.log(e)
+    // do something
+         this.setData({
+           stringModalHidden: true
+    }) 
     },
     config: function() {
         var t = this;
@@ -113,8 +203,6 @@ Page({
                      }), a.audioCtx.setSrc(a.data.audioSrc),a.audioCtx.play(),console.log(a.data.audioSrc);
                    }
                  });  
-                    
-                   
             }
         } else wx.showModal({
             title: "提示",

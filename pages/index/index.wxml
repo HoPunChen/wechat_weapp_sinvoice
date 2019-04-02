@@ -22,9 +22,9 @@
         </view>
     </picker>
 
-    <view style="width:80%">
+    <view style="width:80%; display: flex;justify-content: center">
        <view class="btnbox" hoverClass="btnbox_hover" style="width:40%">
-          <button class="btn" type="primary"></button>
+          <button bindtap="createQRcode" class="btn" type="primary"></button>
              <view class="text">生成二维码</view>
        </view>
        <view class="btnbox" hoverClass="btnbox_hover" style="width:40%">
@@ -35,4 +35,19 @@
               </view>
        </view>
     </view>
+    <view class="btnbox" hoverClass="btnbox_hover" style="width:70%;">
+          <button bindtap="scanCode" class="btn" type="primary"></button>
+             <view class="text">二维码转字符串</view>
+    </view>
+    
+    <modal title="配网二维码" hidden="{{qrcodeModalHidden}}" bindconfirm="qrcodeModalConfirm" bindcancel="qrcodeModalCandel">
+       <view class="box">
+           <image class="qrcode" src="{{qrcode}}" mode="aspectFill"></image>
+       </view>
+    </modal>
+    <modal title="字符串" hidden="{{stringModalHidden}}" bindconfirm="stringModalConfirm" bindcancel="stringModalCandel" >
+       <view class="box">
+           <text selectable="true" data-text="{{qrcodeString}}">{{qrcodeString}}</text>
+       </view>
+    </modal>
 </view>
